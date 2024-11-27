@@ -11,20 +11,21 @@ const createToken = (_id) => {
 
 //------- login
 const login = async (request, response) => {
-  const { carModel, price, phoneNumber, maximumNumberOfPictures, images } =
-    request.body;
+  const { email, password } = request.body;
   try {
-    const vehicle = await userModal.create({
-      carModel,
-      price,
-      phoneNumber,
-      maximumNumberOfPictures,
-      images,
-    });
+    const user = await userModal.login(email, password);
+
+    const token = createToken(user._id);
 
     response
       .status(200)
-      .json(dto(200, vehicle, vehicleConstants.CREATE_VEHICLE));
+      .json(
+        dto(
+          200,
+          { email: email, token: token },
+          vehicleConstants.CREATE_VEHICLE
+        )
+      );
   } catch (error) {
     response.status(400).json(dto(400, {}, error.message));
   }
