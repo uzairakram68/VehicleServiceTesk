@@ -1,6 +1,7 @@
 const { vehicleConstants } = require("../constant");
 const vehicleModel = require("../schema/vehicleSchema");
 const { dto } = require("../utility/uility");
+const { cloudinary } = require("../config/config");
 const mongoose = require("mongoose");
 
 //------- get all vehicles
@@ -45,13 +46,31 @@ const getVehicleById = async (request, response) => {
 const createVehicle = async (request, response) => {
   const { carModel, price, phoneNumber, maximumNumberOfPictures, images } =
     request.body;
+  const files = request.files;
   try {
+    // Validate input
+    if (!files || files.length === 0) {
+      return response
+        .status(400)
+        .json(dto(400, {}, "No images provided for the vehicle."));
+    }
+
+    // Upload images to Cloudinary
+    const imageUploads = await Promise.all(
+      files.map(async (file) => {
+        const result = await cloudinary.uploader.upload(file.path, {
+          folder: "vehicles",
+        });
+        return result.secure_url; // Get the URL of the uploaded image
+      })
+    );
+
     const vehicle = await vehicleModel.create({
       carModel,
       price,
       phoneNumber,
       maximumNumberOfPictures,
-      images,
+      images: imageUploads,
     });
 
     response
