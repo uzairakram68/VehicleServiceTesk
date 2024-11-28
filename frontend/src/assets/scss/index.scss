@@ -1,0 +1,14 @@
+/*-------import variables file-------*/
+@import "./setting/variable.scss";
+
+/*-------import generic file-------*/
+@import "./setting/generic.scss";
+
+/*-------import components scss files-------*/
+@import "./shared/component/button.scss";
+
+/*-------import views scss files-------*/
+@import "./views/login.scss";
+
+//------Skeleton scss
+@import "./shared/skeleton/buttonSkeleton.scss";
