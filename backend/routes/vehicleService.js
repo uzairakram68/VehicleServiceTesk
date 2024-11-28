@@ -11,6 +11,7 @@ const {
   getAllVehicles,
 } = require("../controllers/vehicleController");
 const requireAuth = require("../middleware/requireauth");
+const upload = require("../middleware/multer");
 
 const router = express.Router();
 
@@ -23,7 +24,11 @@ router.get(routeConstant.DEFAULT_PATH, getAllVehicles);
 router.get(routeConstant.VEHICLE_BY_ID_PATH, getVehicleById);
 
 //------- create new vehicle
-router.post(routeConstant.DEFAULT_PATH, createVehicle);
+router.post(
+  routeConstant.DEFAULT_PATH,
+  upload.array("images", 10),
+  createVehicle
+);
 
 //-------delete vehicle by id
 router.delete(routeConstant.VEHICLE_BY_ID_PATH, deleteVehicle);

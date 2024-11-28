@@ -5,5 +5,6 @@ const vehicleConstants = {
   VEHICLE_FOUND: "Vehicle found",
   VEHICLE_DELETED: "Vehicle Deleted",
   VEHICLE_UPDATED: "Vehicle Updated",
+  NO_IMAGES_PROVIDED: "No images provided for the vehicle.",
 };
 module.exports = { vehicleConstants };

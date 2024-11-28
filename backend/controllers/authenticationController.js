@@ -21,13 +21,13 @@ const login = async (request, response) => {
       .status(200)
       .json(
         dto(
-          200,
+          true,
           { email: email, token: token },
           vehicleConstants.CREATE_VEHICLE
         )
       );
   } catch (error) {
-    response.status(400).json(dto(400, {}, error.message));
+    response.status(400).json(dto(false, {}, error.message));
   }
 };
 
